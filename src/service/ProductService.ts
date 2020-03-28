@@ -6,7 +6,7 @@ class ProductService {
     public createProduct = async (data, productCategoryId, productPicture, callback) => {
         try {
             const product = new ProductModel();
-            product.productName = data.name;
+            product.productName = data.productName;
             product.productPicture = productPicture ? productPicture.path : ' ';
             product.productPrice = data.productPrice;
             product.productDescription = data.productDescription;

@@ -6,3 +6,4 @@ package-lock.json
 .idea/sonarlint
 .idea/*
 uploads
+uploads/**

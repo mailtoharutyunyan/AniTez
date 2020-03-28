@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --respawn dist/server.js",
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "dev": "nodemon --exec ts-node src/server.ts 0.0.0.0",
     "build": "tsc -p ."
   },
   "author": "",
