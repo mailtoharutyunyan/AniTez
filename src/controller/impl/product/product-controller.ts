@@ -1,10 +1,10 @@
-import IControllerBase from '../../spec/IControllerBase.interface';
+import IControllerBase from '../../spec/i-base-controller';
 import * as express from 'express';
-import ProductService from '../../../service/ProductService';
-import { mult } from '../../../middleware/ImageMiddleware';
-import ResponseManager from '../../../managers/ResponseManager';
-import TokenValidator from '../../../middleware/TokenValidator';
-import ValidationResult from '../../../middleware/ValidationResult';
+import ProductService from '../../../service/product-service';
+import { mult } from '../../../middleware/image-middleware';
+import ResponseManager from '../../../managers/response-manager';
+import TokenValidator from '../../../middleware/token-validator';
+import ValidationResult from '../../../middleware/validation-result';
 import { Request, Response } from 'express';
 
 class ProductController implements IControllerBase {
@@ -12,6 +12,7 @@ class ProductController implements IControllerBase {
     private path = '/product';
     private router = express.Router();
     private productService: ProductService;
+    private responseHandler: ResponseManager;
 
     constructor() {
         this.initRoutes();
@@ -29,6 +30,11 @@ class ProductController implements IControllerBase {
             ValidationResult,
             TokenValidator(),
             this.getProductsByCategory);
+        /*Get All Products */
+        this.router.get(this.path,
+            ValidationResult,
+            TokenValidator(),
+            this.getAllProducts);
     }
 
     private createProduct = async (req: Request, res: Response) => {
@@ -51,6 +57,11 @@ class ProductController implements IControllerBase {
         res.status(200).json(iProducts);
     }
 
+    private getAllProducts = async (req: Request, res: Response) => {
+        this.responseHandler = ResponseManager.getResponseHandler(res);
+        const allProducts = await this.productService.getAllProducts(req, this.responseHandler);
+        res.json(allProducts);
+    }
 }
 
 export default ProductController;

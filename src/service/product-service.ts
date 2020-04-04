@@ -1,5 +1,4 @@
-import { ProductModel } from '../model/Product';
-import { ProductCategoryModel } from '../model/ProductCategory';
+import { ProductModel } from '../model/products';
 
 class ProductService {
 
@@ -31,6 +30,16 @@ class ProductService {
             callback.onError(e);
         }
     }
+
+    getAllProducts = async (res, callback) => {
+        try {
+            const allProducts = await ProductModel.find({});
+            callback.onSuccess(allProducts, `Product List`, 200);
+        } catch (e) {
+            callback.onError(e);
+        }
+    }
+
 }
 
 export default ProductService;

@@ -1,5 +1,5 @@
-import TokenManager from './TokenManager';
-import Constants from '../constant/Constants';
+import TokenManager from './token-manager';
+import Constants from '../constant/constants';
 
 const Tokenizer = new TokenManager(
     Constants.secret,

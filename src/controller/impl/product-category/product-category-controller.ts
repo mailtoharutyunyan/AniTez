@@ -1,11 +1,11 @@
-import IControllerBase from '../../spec/IControllerBase.interface';
+import IControllerBase from '../../spec/i-base-controller';
 import * as express from 'express';
 import { Response } from 'express';
-import ProductCategoryService from '../../../service/ProductCategoryService';
-import ResponseManager from '../../../managers/ResponseManager';
-import ValidationResult from '../../../middleware/ValidationResult';
-import TokenValidator from '../../../middleware/TokenValidator';
-import { mult } from '../../../middleware/ImageMiddleware';
+import ProductCategoryService from '../../../service/product-category-service';
+import ResponseManager from '../../../managers/response-manager';
+import ValidationResult from '../../../middleware/validation-result';
+import TokenValidator from '../../../middleware/token-validator';
+import { mult } from '../../../middleware/image-middleware';
 
 class ProductCategoryController implements IControllerBase {
 

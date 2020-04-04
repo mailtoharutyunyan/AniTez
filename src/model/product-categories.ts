@@ -1,16 +1,16 @@
 import { Document, model, Schema } from 'mongoose';
 
 
-export interface ProductCategory extends Document {
+export interface ProductCategories extends Document {
     categoryName: string;
     categoryImage: string;
-    user_id: string;
+    userId: string;
 }
 
 export const ProductCategorySchema = new Schema({
     categoryName: {type: String},
     categoryImage: {type: String},
-    user_id: {type: Schema.Types.ObjectId, required: true},
+    userId: {type: Schema.Types.ObjectId, required: true},
 }, {
     versionKey: false, timestamps: true,
     toJSON: {
@@ -22,6 +22,6 @@ export const ProductCategorySchema = new Schema({
         }
     }
 });
-const ProductCategoryModel = model<ProductCategory>('product-category', ProductCategorySchema);
+const ProductCategoryModel = model<ProductCategories>('product-category', ProductCategorySchema);
 
 export { ProductCategoryModel };

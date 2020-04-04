@@ -1,7 +1,7 @@
-import { UserModel } from '../model/User';
-import BCryptManager from '../managers/BCryptManager';
-import { Tokenizer } from '../managers/Tokenizer';
-import AppError from '../middleware/AppError';
+import { UserModel } from '../model/users';
+import BCryptManager from '../managers/bcrypt-manager';
+import { Tokenizer } from '../managers/tokenizer';
+import AppError from '../middleware/app-error';
 
 class AuthenticationService {
 
@@ -45,7 +45,7 @@ class AuthenticationService {
                 name: dbUser.name,
                 email: dbUser.email,
                 token: token
-            });
+            },'Login Successfully',200);
         } catch (e) {
             callback.onError(e);
         }

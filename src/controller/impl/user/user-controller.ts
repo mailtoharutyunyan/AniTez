@@ -1,10 +1,8 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
-import UserService from '../../../service/UserService';
-import IControllerBase from '../../spec/IControllerBase.interface';
-import ResponseManager from '../../../managers/ResponseManager';
-import ValidationResult from '../../../middleware/ValidationResult';
-import TokenValidator from '../../../middleware/TokenValidator';
+import UserService from '../../../service/user-service';
+import IControllerBase from '../../spec/i-base-controller';
+import ResponseManager from '../../../managers/response-manager';
 
 class UserController implements IControllerBase {
 
@@ -18,7 +16,7 @@ class UserController implements IControllerBase {
     }
 
     public initRoutes(): void {
-        this.router.get(this.path,  this.createUser);
+        this.router.get(this.path, this.createUser);
     }
 
     private createUser = async (req: Request, res: Response) => {

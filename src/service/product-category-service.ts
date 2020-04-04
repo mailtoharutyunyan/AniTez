@@ -1,4 +1,4 @@
-import { ProductCategoryModel } from '../model/ProductCategory';
+import { ProductCategoryModel } from '../model/product-categories';
 
 class ProductCategoryService {
 
@@ -7,14 +7,9 @@ class ProductCategoryService {
             const productCategory = new ProductCategoryModel();
             productCategory.categoryName = productCategoryName;
             productCategory.categoryImage = productCategoryImage ? productCategoryImage.path : ' ';
-            productCategory.user_id = uid;
+            productCategory.userId = uid;
             let iProductCategory = await productCategory.save();
-            callback.onSuccess({
-                productCategoryId: iProductCategory._id,
-                productCategoryName: iProductCategory.categoryName,
-                productCategoryImage: iProductCategory.categoryImage,
-                userId: iProductCategory.user_id,
-            }, 'Category Successfully created', 201)
+            callback.onSuccess(iProductCategory, 'Category Successfully created', 201)
         } catch (e) {
             callback.onError(e);
         }
@@ -22,7 +17,7 @@ class ProductCategoryService {
 
     public getUserProductCategories = async (uid, callback) => {
         try {
-            const productCategory = await ProductCategoryModel.find({user_id: uid});
+            const productCategory = await ProductCategoryModel.find({userId: uid});
             return callback.onSuccess(productCategory, 'Retrieved User Product Categories', 200);
         } catch (e) {
             return callback.onError(e)

@@ -1,4 +1,4 @@
-import { UserModel } from '../model/User';
+import { UserModel } from '../model/users';
 
 class UserService {
 

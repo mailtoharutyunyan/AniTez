@@ -1,8 +1,8 @@
-import IControllerBase from '../../spec/IControllerBase.interface';
+import IControllerBase from '../../spec/i-base-controller';
 import * as express from 'express';
 import { Request, Response } from 'express';
-import AuthenticationService from '../../../service/AuthenticationService';
-import ResponseManager from '../../../managers/ResponseManager';
+import AuthenticationService from '../../../service/authentication-service';
+import ResponseManager from '../../../managers/response-manager';
 
 class AuthenticationController implements IControllerBase {
 

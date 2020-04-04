@@ -1,8 +1,8 @@
-import ResponseManager from "../managers/ResponseManager";
+import ResponseManager from "../managers/response-manager";
 import { Request, Response } from 'express';
 
 import { validationResult } from "express-validator";
-import AppError from "./AppError";
+import AppError from "./app-error";
 
 
 const ValidationResult = (req: Request, res: Response, next) => {

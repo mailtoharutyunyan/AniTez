@@ -1,8 +1,8 @@
-import ResponseManager from '../managers/ResponseManager';
-import AppError from './AppError';
-import Constants from '../constant/Constants';
-import { UserModel } from '../model/User';
-import { Tokenizer } from '../managers/Tokenizer';
+import ResponseManager from '../managers/response-manager';
+import AppError from './app-error';
+import Constants from '../constant/constants';
+import { UserModel } from '../model/users';
+import { Tokenizer } from '../managers/tokenizer';
 
 const TokenValidator = () => async (req: any, res: any, next) => { // role
     const responseHandler = ResponseManager.getResponseHandler(res);
