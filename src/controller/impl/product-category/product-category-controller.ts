@@ -1,6 +1,6 @@
 import IControllerBase from '../../spec/i-base-controller';
 import * as express from 'express';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import ProductCategoryService from '../../../service/product-category-service';
 import ResponseManager from '../../../managers/response-manager';
 import ValidationResult from '../../../middleware/validation-result';
@@ -22,7 +22,11 @@ class ProductCategoryController implements IControllerBase {
         this.router.post(this.path, mult.single('productCategoryImage'), ValidationResult, TokenValidator(),
             this.createProductCategory);
         this.router.get(this.path, ValidationResult, TokenValidator(), this.userProductCategories);
-        this.router.get(this.path+"/all", this.allProductCategories);
+        this.router.get(this.path + '/all', this.allProductCategories);
+        this.router.delete(this.path + '/:id', ValidationResult, TokenValidator(), this.deleteProductCategory);
+        this.router.put(this.path + '/:id', mult.single('productCategoryImage'),
+            ValidationResult, TokenValidator(), this.updateProductCategory);
+        this.router.get(this.path + '/search/:criteria', this.searchProductCategory);
 
     }
 
@@ -51,6 +55,19 @@ class ProductCategoryController implements IControllerBase {
     }
 
 
+    private deleteProductCategory = async (req, res) => {
+        const responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productCategoryService.deleteProductCategoryById(req.params.id, responseHandler)
+    }
+
+    private updateProductCategory = async (req, res) => {
+        const responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productCategoryService.updateProductCategoryById(req.params.id, req.session, req.file, req.body, responseHandler);
+    }
+    private searchProductCategory = async (req: Request, res: Response) => {
+        const responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productCategoryService.search(req.params.criteria, responseHandler);
+    }
 }
 
 export default ProductCategoryController;

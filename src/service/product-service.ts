@@ -1,4 +1,5 @@
 import { ProductModel } from '../model/products';
+import AppError from '../middleware/app-error';
 
 class ProductService {
 
@@ -22,16 +23,16 @@ class ProductService {
             callback.onError(e);
         }
     };
-    getAllProductsByTheirCategory = async (productCategoryId, callback) => {
+    public getAllProductsByTheirCategory = async (productCategoryId, callback) => {
         try {
             const productsWithCategory = await ProductModel.find({productCategoryId: productCategoryId});
-            callback.onSuccess(productsWithCategory, `Products of Category Reprieved)`, 200);
+            callback.onSuccess(productsWithCategory, `Products of Category Reprieved`, 200);
         } catch (e) {
             callback.onError(e);
         }
     }
 
-    getAllProducts = async (res, callback) => {
+    public getAllProducts = async (res, callback) => {
         try {
             const allProducts = await ProductModel.find({});
             callback.onSuccess(allProducts, `Product List`, 200);
@@ -39,7 +40,50 @@ class ProductService {
             callback.onError(e);
         }
     }
+    public deleteProductById = async (id, callback) => {
+        try {
+            const product = await ProductModel.deleteOne({_id: id}).exec();
+            callback.onSuccess({}, 'Product Successfully Deleted', 200);
+        } catch (e) {
+            callback.onError(e);
+        }
+    }
 
+    public updateProductById = async (id, body, productPicture, callback) => {
+        try {
+            const product = await ProductModel.findOne({_id: id}).exec();
+            if (product) {
+                product.productName = body.productName;
+                product.productPicture = productPicture ? productPicture.path : ' ';
+                product.productPrice = body.productPrice;
+                product.productDescription = body.productDescription;
+                product.productStars = body.productStars;
+                product.productColor = body.productColor;
+                product.productItemsCount = body.productItemsCount;
+                product.productSize = body.productSize;
+                product.productDiscount = body.productDiscount;
+                product.productModelGender = body.productModelGender;
+                const iUpdatedProduct = await product.save();
+                callback.onSuccess(iUpdatedProduct, 'Product Successfully Updated', 200);
+            } else {
+                console.log(new AppError('cannot update category', 200))
+            }
+        } catch (e) {
+            callback.onError(e);
+        }
+    }
+
+    public search = async (criteria, callback) => {
+        try {
+            const products = await ProductModel.find({$text: {$search: criteria}})
+                // .skip(20)
+                // .limit(10)
+                .exec()
+            callback.onSuccess(products, 'Search Result', 200)
+        } catch (e) {
+            callback.onError(e)
+        }
+    }
 }
 
 export default ProductService;

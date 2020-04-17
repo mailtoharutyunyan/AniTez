@@ -27,14 +27,24 @@ class ProductController implements IControllerBase {
             this.createProduct);
         /* Get Products By Their Category */
         this.router.get(this.path + '/:productCategoryId',
-            ValidationResult,
-            TokenValidator(),
             this.getProductsByCategory);
         /*Get All Products */
         this.router.get(this.path,
             ValidationResult,
             TokenValidator(),
             this.getAllProducts);
+        /* Delete Product By Id */
+        this.router.delete(this.path + '/:id',
+            ValidationResult,
+            TokenValidator(),
+            this.deleteProduct);
+        /* Update Product By Id */
+        this.router.put(this.path + '/:id', mult.single('productPicture'),
+            ValidationResult,
+            TokenValidator(),
+            this.updateProduct);//searchProduct
+        /* Search Product */
+        this.router.get(this.path + '/search/:criteria', this.searchProduct);
     }
 
     private createProduct = async (req: Request, res: Response) => {
@@ -61,6 +71,18 @@ class ProductController implements IControllerBase {
         this.responseHandler = ResponseManager.getResponseHandler(res);
         const allProducts = await this.productService.getAllProducts(req, this.responseHandler);
         res.json(allProducts);
+    }
+    private deleteProduct = async (req: Request, res: Response) => {
+        this.responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productService.deleteProductById(req.params.id, this.responseHandler);
+    }
+    private updateProduct = async (req: any, res: Response) => {
+        this.responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productService.updateProductById(req.params.id, req.body, req.file, this.responseHandler);
+    }
+    private searchProduct = async (req: Request, res: Response) => {
+        this.responseHandler = ResponseManager.getResponseHandler(res);
+        await this.productService.search(req.params.criteria, this.responseHandler);
     }
 }
 

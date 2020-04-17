@@ -18,14 +18,14 @@ export class Roles {
 }
 
 export const UserSchema = new Schema({
-    name: {type: String},
-    username: {type: String},
-    email: {type: String},
-    password: {type: String, required: true},
-    role: {type: Number, default: Roles.User},
-    picture: {type: String},
-    phone: {type: String},
-    isDisabled: {type: Boolean, default: false}
+    name:       { type: String },
+    username:   { type: String },
+    email:      { type: String },
+    password:   { type: String, required: true },
+    role:       { type: Number, default: Roles.User },
+    picture:    { type: String },
+    phone:      { type: String },
+    isDisabled: { type: Boolean, default: false }
 }, {
     versionKey: false, timestamps: true,
     toJSON: {

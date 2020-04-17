@@ -42,6 +42,16 @@ class OrderService {
         }
     }
 
+    public orderService = async (id, callback) => {
+        try {
+            await OrderModel.deleteOne({_id: id}).exec();
+            callback.onSuccess({}, 'Order Successfully Deleted', 200);
+        } catch (e) {
+            callback.onError(e)
+        }
+    }
+
+
     addDays(dateObj, numDays) {
         dateObj.setDate(dateObj.getDate() + numDays);
         return dateObj;

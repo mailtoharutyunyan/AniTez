@@ -1,4 +1,5 @@
 import { Document, model, Schema } from 'mongoose';
+import { ProductSchema } from './products';
 
 
 export interface ProductCategories extends Document {
@@ -22,6 +23,8 @@ export const ProductCategorySchema = new Schema({
         }
     }
 });
+
+ProductCategorySchema.index({'$**': 'text'});
 const ProductCategoryModel = model<ProductCategories>('product-category', ProductCategorySchema);
 
 export { ProductCategoryModel };

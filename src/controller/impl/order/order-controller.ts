@@ -24,6 +24,8 @@ class OrderController {
         this.router.get(this.path + '/sellers', ValidationResult, TokenValidator(), this.getAllSellerOrders);
         /* Get All Buyer Orders */
         this.router.get(this.path + '/buyers', ValidationResult, TokenValidator(), this.getAllBuyerOrders);
+        /* Delete Order */
+        this.router.delete(this.path + '/:id', ValidationResult, TokenValidator(), this.deleteOrder);
     }
 
     private createOrder = async (req, res) => {
@@ -36,10 +38,14 @@ class OrderController {
         let iOrder = await this.orderService.getSellerOrders(req.session, this.responseHandler);
         res.status(200).json(iOrder);
     }
-    protected getAllBuyerOrders = async (req, res) => {
+    private getAllBuyerOrders = async (req, res) => {
         this.responseHandler = ResponseManager.getResponseHandler(res)
         let iOrder = await this.orderService.getBuyerOrders(req.session, this.responseHandler);
         res.status(200).json(iOrder);
+    }
+    private deleteOrder = async (req, res) => {
+        this.responseHandler = ResponseManager.getResponseHandler(res)
+        await this.orderService.orderService(req.params.id, this.responseHandler);
     }
 }
 

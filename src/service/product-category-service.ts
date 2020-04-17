@@ -1,4 +1,6 @@
 import { ProductCategoryModel } from '../model/product-categories';
+import AppError from '../middleware/app-error';
+import { ProductModel } from '../model/products';
 
 class ProductCategoryService {
 
@@ -30,6 +32,42 @@ class ProductCategoryService {
             return callback.onSuccess(productCategory, 'Retrieved Product Categories', 200);
         } catch (e) {
             return callback.onError(e)
+        }
+    }
+
+    public deleteProductCategoryById = async (id, callback) => {
+        try {
+            await ProductCategoryModel.deleteOne({_id: id}).exec();
+            return callback.onSuccess({}, 'Product Category Successfully Deleted', 200);
+        } catch (e) {
+            return callback.onError(e)
+        }
+    }
+    public updateProductCategoryById = async (id, token, productCategoryImage, body, callback) => {
+        try {
+            const iProduct = await ProductCategoryModel.findOne({_id: id}).exec();
+            if (iProduct) {
+                iProduct.categoryName = body.productCategoryName;
+                iProduct.categoryImage = productCategoryImage ? productCategoryImage.path : ' ';
+                iProduct.userId = token.uid;
+            } else {
+                console.log(new AppError('cannot find product category', 200))
+            }
+            await iProduct.save();
+            return callback.onSuccess(iProduct, 'Product Category Successfully Updated', 200);
+        } catch (e) {
+            return callback.onError(e)
+        }
+    }
+    public search = async (criteria, callback) => {
+        try {
+            const searchProductCategory = await ProductCategoryModel.find({$text: {$search: criteria}})
+                // .skip(20)
+                // .limit(10)
+                .exec()
+            callback.onSuccess(searchProductCategory, 'Search Result', 200)
+        } catch (e) {
+            callback.onError(e)
         }
     }
 

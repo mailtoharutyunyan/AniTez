@@ -45,13 +45,11 @@ class AuthenticationService {
                 name: dbUser.name,
                 email: dbUser.email,
                 token: token
-            },'Login Successfully',200);
+            }, 'Login Successfully', 200);
         } catch (e) {
             callback.onError(e);
         }
     }
-
 }
-
 
 export default AuthenticationService;
