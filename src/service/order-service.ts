@@ -26,10 +26,17 @@ class OrderService {
     }
     public getSellerOrders = async (token, callback) => {
         try {
-            console.log(token.uid)
-            let orders = await OrderModel.find();
-            // console.log(orders)
+            let orders = await OrderModel.find({sellerId: token.uid});
             callback.onSuccess(orders, 'All Seller Orders', 200);
+        } catch (e) {
+            callback.onError(e)
+        }
+    }
+
+    public getBuyerOrders = async (token, callback) => {
+        try {
+            let orders = await OrderModel.find({buyerId: token.uid});
+            callback.onSuccess(orders, 'All Buyer Orders', 200);
         } catch (e) {
             callback.onError(e)
         }
