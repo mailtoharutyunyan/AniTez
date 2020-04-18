@@ -34,6 +34,9 @@ export const OrderSchema = new Schema({
     deliveryDate: {
         type: Date
     },
+    totalPrice: {
+        type: String
+    },
 
     sellerId: {
         type: Schema.Types.ObjectId,
