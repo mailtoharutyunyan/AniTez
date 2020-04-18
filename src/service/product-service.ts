@@ -3,7 +3,7 @@ import AppError from '../middleware/app-error';
 
 class ProductService {
 
-    public createProduct = async (data, productCategoryId, productPicture, callback) => {
+    public createProduct = async (data, token, productCategoryId, productPicture, callback) => {
         try {
             const product = new ProductModel();
             product.productName = data.productName;
@@ -17,6 +17,7 @@ class ProductService {
             product.productDiscount = data.productDiscount;
             product.productModelGender = data.productModelGender;
             product.productCategoryId = productCategoryId;
+            product.userId = token.uid;
             let iProduct = await product.save();
             callback.onSuccess(iProduct, 'Product Successfully created', 201);
         } catch (e) {

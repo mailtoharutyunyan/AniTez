@@ -47,10 +47,11 @@ class ProductController implements IControllerBase {
         this.router.get(this.path + '/search/:criteria', this.searchProduct);
     }
 
-    private createProduct = async (req: Request, res: Response) => {
+    private createProduct = async (req: any, res: Response) => {
         const responseHandler = ResponseManager.getResponseHandler(res);
         let product = await this.productService.createProduct(
             req.body,
+            req.session,
             req.params.productCategoryId,
             req.file,
             responseHandler

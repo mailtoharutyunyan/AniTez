@@ -11,7 +11,8 @@ export interface IProduct extends Document {
     productSize: number;
     productDiscount: string;
     productModelGender: string;
-    productCategoryId: string
+    productCategoryId: string;
+    userId:string;
 }
 
 export const ProductSchema = new Schema({
@@ -36,7 +37,8 @@ export const ProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'product-category',
         required: true
-    }
+    },
+    userId: {type: Schema.Types.ObjectId, required: true},
 }, {
     versionKey: false, timestamps: true,
     toJSON: {
