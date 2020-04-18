@@ -31,7 +31,7 @@ class OrderService {
     }
     public getSellerOrders = async (token, callback) => {
         try {
-            let orders = await OrderModel.find({sellerId: token.uid});
+            let orders = await OrderModel.find({sellerId: token.uid}).populate('productId');
             console.log(orders)
             callback.onSuccess(orders, 'All Seller Orders', 200);
         } catch (e) {
