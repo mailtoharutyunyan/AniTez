@@ -1,4 +1,5 @@
 import { OrderModel } from '../model/orders';
+import { ProductModel } from '../model/products';
 
 class OrderService {
 
@@ -18,8 +19,12 @@ class OrderService {
             order.region = body.region;
             order.phone = body.phone;
             order.buyerName = body.buyerName;
-            let iOrder = await order.save();
-            callback.onSuccess(iOrder, 'Order successfully created', 201);
+            let MyOrder = await order.save();
+            const productDetails = await ProductModel.find({_id: body.productId})
+            callback.onSuccess({
+                savedOrder: MyOrder,
+                productDetails
+            }, 'Order successfully created', 201);
         } catch (e) {
             callback.onError(e);
         }
@@ -27,6 +32,7 @@ class OrderService {
     public getSellerOrders = async (token, callback) => {
         try {
             let orders = await OrderModel.find({sellerId: token.uid});
+            console.log(orders)
             callback.onSuccess(orders, 'All Seller Orders', 200);
         } catch (e) {
             callback.onError(e)
@@ -35,13 +41,12 @@ class OrderService {
 
     public getBuyerOrders = async (token, callback) => {
         try {
-            let orders = await OrderModel.find({buyerId: token.uid});
-            callback.onSuccess(orders, 'All Buyer Orders', 200);
+            let orders = await OrderModel.find({buyerId: token.uid}).populate('productId')
+            callback.onSuccess(orders, 'All Buyer Orders', 200)
         } catch (e) {
             callback.onError(e)
         }
     }
-
     public orderService = async (id, callback) => {
         try {
             await OrderModel.deleteOne({_id: id}).exec();
