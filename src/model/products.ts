@@ -12,7 +12,7 @@ export interface IProduct extends Document {
     productDiscount: string;
     productModelGender: string;
     productCategoryId: string;
-    userId:string;
+    userId: string;
 }
 
 export const ProductSchema = new Schema({
@@ -23,13 +23,15 @@ export const ProductSchema = new Schema({
     productDescription: {type: String},
     productStars: {
         type: Number,
-        enum: [1, 2, 3, 4, 5]
+        enum: [0, 1, 2, 3, 4, 5],
+        default: 0
     },
     productColor: {type: String},
     productItemsCount: {type: Number},
     productSize: {
         type: Number,
-        enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        default: 0
     },
     productDiscount: {type: String},
     productModelGender: {type: String},

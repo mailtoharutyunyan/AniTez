@@ -64,6 +64,7 @@ class ProductService {
                 product.productSize = body.productSize;
                 product.productDiscount = body.productDiscount;
                 product.productModelGender = body.productModelGender;
+                product.userId = id;
                 const iUpdatedProduct = await product.save();
                 callback.onSuccess(iUpdatedProduct, 'Product Successfully Updated', 200);
             } else {
